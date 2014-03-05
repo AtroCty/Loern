@@ -10,12 +10,12 @@ import android.widget.Button;
 
 public class MainActivity extends Activity implements OnClickListener
 {
-
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
 	{
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.game);
+		setContentView(R.layout.activity_main);
 		Button button = (Button) findViewById(R.id.button1);
 		button.setOnClickListener(this);
 	}
@@ -33,4 +33,5 @@ public class MainActivity extends Activity implements OnClickListener
 	{
 		startActivity(new Intent(this, GameActivity.class));
 	}
+	
 }
