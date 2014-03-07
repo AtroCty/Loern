@@ -4,7 +4,10 @@
     <string name="app_name">Loern</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
-    <string name="start">Start</string>
+    <string name="start1">Übung</string>
+    <string name="start2">Prüfung</string>
+    <string name="start3">Zeittest</string>
     <string name="answer1">Antwort 1</string>
-
+	
+   
 </resources>

@@ -11,14 +11,41 @@
 
     <Button
         android:id="@+id/button1"
+        style="@style/ButtonText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_above="@+id/button2"
         android:layout_alignParentRight="true"
-        android:layout_marginBottom="32dp"
-        android:layout_marginRight="23dp"
-        android:minHeight="70dip"
-        android:minWidth="120dp"
-        android:text="@string/start" />
+        android:layout_alignParentTop="true"
+        android:layout_margin="4dp"
+        android:background="@drawable/button"
+        android:padding="4dp"
+        android:text="@string/start1"
+        android:textColor="#ffffff" />
+
+    <Button
+        android:id="@+id/button3"
+        style="@style/ButtonText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/button2"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="4dp"
+        android:background="@drawable/button"
+        android:text="@string/start3"
+        android:textColor="#ffffff" />
+
+    <Button
+        android:id="@+id/button2"
+        style="@style/ButtonText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/button3"
+        android:layout_centerVertical="true"
+        android:layout_margin="4dp"
+        android:background="@drawable/button"
+        android:singleLine="false"
+        android:text="@string/start2"
+        android:textColor="#ffffff" />
 
 </RelativeLayout>
