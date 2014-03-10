@@ -35,19 +35,23 @@ public class MainActivity extends Activity implements OnClickListener
 	@Override
 	public void onClick(View v) 
 	{
+		Intent nextActivity = new Intent(this, GameActivity.class);
+		int mode = 0;
+		
 		if(v.getId( )== R.id.button1) 
 		{
-			
+			mode = 1;			
 		}
 		if(v.getId() == R.id.button2) 
 		{
-			
+			mode = 2;
 		}
 		if(v.getId() == R.id.button3) 
 		{
-			
+			mode = 3;
 		}
-		startActivity(new Intent(this, GameActivity.class));
+		nextActivity.putExtra("Mode", mode);
+		startActivity(nextActivity);
 	}
 	
 }
