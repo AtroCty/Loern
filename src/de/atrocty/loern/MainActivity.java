@@ -16,8 +16,12 @@ public class MainActivity extends Activity implements OnClickListener
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		Button button = (Button) findViewById(R.id.button1);
-		button.setOnClickListener(this);
+		Button b = (Button) findViewById(R.id.button1);
+		b.setOnClickListener(this);
+		b = (Button) findViewById(R.id.button2);
+		b.setOnClickListener(this);
+		b = (Button) findViewById(R.id.button3);
+		b.setOnClickListener(this);
 	}
 
 	@Override
@@ -31,6 +35,18 @@ public class MainActivity extends Activity implements OnClickListener
 	@Override
 	public void onClick(View v) 
 	{
+		if(v.getId( )== R.id.button1) 
+		{
+			
+		}
+		if(v.getId() == R.id.button2) 
+		{
+			
+		}
+		if(v.getId() == R.id.button3) 
+		{
+			
+		}
 		startActivity(new Intent(this, GameActivity.class));
 	}
 	
