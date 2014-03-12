@@ -21,6 +21,7 @@
             style="@style/ButtonText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="32dp"
             android:background="@drawable/button"
             android:text="@string/answer1" />
 
@@ -84,12 +85,12 @@
         android:textColor="#003300" />
 
     <TextView
-        android:id="@+id/version"
+        android:id="@+id/zeit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:text="Zeit"
+        android:text="Punkte"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textColor="#330000" />
 
