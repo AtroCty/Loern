@@ -6,18 +6,22 @@ import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.TextView;
 
 public class GameActivity extends Activity implements OnClickListener 
 {
+	public int mode = 0, punkte = 0;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.game);
-		Button b = (Button) findViewById(R.id.button1);
-		int mode = getIntent().getIntExtra("Mode", 0);
+		Button b = (Button) findViewById(R.id.answer1);
+		mode = getIntent().getIntExtra("Mode", 0);
 		b.setText(String.valueOf(mode));
 		b.setOnClickListener(this);
+		refresh();
 	}
 
 	@Override
@@ -27,9 +31,20 @@ public class GameActivity extends Activity implements OnClickListener
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
+	
+	public void refresh()
+	{
+		TextView tvPunkte = (TextView)findViewById(R.id.punkte);
+		tvPunkte.setText(Integer.toString(punkte));
+	}
 
+	public void bla()
+	{
+		
+	}
+	
 	@Override
-	public void onClick(View arg0) 
+	public void onClick(View v) 
 	{
 		// TODO Auto-generated method stub
 		

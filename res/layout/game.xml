@@ -8,13 +8,89 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".MainActivity" >
 
-    <Button
-        android:id="@+id/button1"
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:orientation="vertical" >
+
+        <Button
+            android:id="@+id/answer1"
+            style="@style/ButtonText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button"
+            android:text="@string/answer1" />
+
+        <Button
+            android:id="@+id/answer2"
+            style="@style/ButtonText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button"
+            android:text="@string/answer1" />
+
+        <Button
+            android:id="@+id/answer3"
+            style="@style/ButtonText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button"
+            android:text="@string/answer1" />
+
+        <Button
+            android:id="@+id/answer4"
+            style="@style/ButtonText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button"
+            android:text="@string/answer1" />
+
+        <Button
+            android:id="@+id/answer5"
+            style="@style/ButtonText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button"
+            android:text="@string/answer1" />
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="124dp"
-        android:text="@string/answer1" />
+        android:orientation="vertical" >
+
+        <FrameLayout
+            android:id="@+id/bar_time"
+            android:layout_width="150dp"
+            android:layout_height="5dp"
+            android:layout_gravity="center_vertical"
+            android:background="#660000" >
+        </FrameLayout>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/punkte"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:text="Punkte"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="#003300" />
+
+    <TextView
+        android:id="@+id/version"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:text="Zeit"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="#330000" />
 
 </RelativeLayout>
