@@ -49,8 +49,8 @@
         android:gravity="center"
         android:orientation="horizontal" >
 
-        <TextView
-            android:id="@+id/textView2"
+        <de.atrocty.loern.AutoResizeTextView
+            android:id="@+id/frage"
             android:layout_width="245dp"
             android:layout_height="50dp"
             android:gravity="center"
@@ -92,7 +92,7 @@
                 android:text="1"
                 tools:ignore="HardcodedText" />
 
-            <TextView
+            <de.atrocty.loern.AutoResizeTextView
                 android:id="@+id/textView1"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
@@ -124,7 +124,7 @@
                 android:text="2"
                 tools:ignore="HardcodedText" />
 
-            <TextView
+            <de.atrocty.loern.AutoResizeTextView
                 android:id="@+id/TextView01"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
@@ -155,7 +155,7 @@
                 android:text="3"
                 tools:ignore="HardcodedText" />
 
-            <TextView
+            <de.atrocty.loern.AutoResizeTextView
                 android:id="@+id/TextView03"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
@@ -186,7 +186,7 @@
                 android:text="4"
                 tools:ignore="HardcodedText" />
 
-            <TextView
+            <de.atrocty.loern.AutoResizeTextView
                 android:id="@+id/TextView02"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
@@ -217,7 +217,7 @@
                 android:text="5"
                 tools:ignore="HardcodedText" />
 
-            <TextView
+            <de.atrocty.loern.AutoResizeTextView
                 android:id="@+id/TextView04"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
