@@ -51,12 +51,12 @@
 
         <de.atrocty.loern.AutoResizeTextView
             android:id="@+id/frage"
-            android:layout_width="245dp"
+            android:layout_width="235dp"
             android:layout_height="50dp"
             android:gravity="center"
             android:text="Frage"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textStyle="bold"
+            android:textStyle="normal"
             tools:ignore="HardcodedText" />
 
         <FrameLayout
@@ -90,10 +90,11 @@
                 android:layout_height="45dp"
                 android:background="@drawable/roundbutton"
                 android:text="1"
+                android:textStyle="normal"
                 tools:ignore="HardcodedText" />
 
             <de.atrocty.loern.AutoResizeTextView
-                android:id="@+id/textView1"
+                android:id="@+id/tanswer1"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:gravity="center"
@@ -122,10 +123,11 @@
                 android:layout_height="45dp"
                 android:background="@drawable/roundbutton"
                 android:text="2"
+                android:textStyle="normal"
                 tools:ignore="HardcodedText" />
 
             <de.atrocty.loern.AutoResizeTextView
-                android:id="@+id/TextView01"
+                android:id="@+id/tanswer2"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:gravity="center"
@@ -153,10 +155,11 @@
                 android:layout_height="45dp"
                 android:background="@drawable/roundbutton"
                 android:text="3"
+                android:textStyle="normal"
                 tools:ignore="HardcodedText" />
 
             <de.atrocty.loern.AutoResizeTextView
-                android:id="@+id/TextView03"
+                android:id="@+id/tanswer3"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:gravity="center"
@@ -184,10 +187,11 @@
                 android:layout_height="45dp"
                 android:background="@drawable/roundbutton"
                 android:text="4"
+                android:textStyle="normal"
                 tools:ignore="HardcodedText" />
 
             <de.atrocty.loern.AutoResizeTextView
-                android:id="@+id/TextView02"
+                android:id="@+id/tanswer4"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:gravity="center"
@@ -215,10 +219,11 @@
                 android:layout_height="45dp"
                 android:background="@drawable/roundbutton"
                 android:text="5"
+                android:textStyle="normal"
                 tools:ignore="HardcodedText" />
 
             <de.atrocty.loern.AutoResizeTextView
-                android:id="@+id/TextView04"
+                android:id="@+id/tanswer5"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:gravity="center"
