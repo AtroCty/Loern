@@ -6,15 +6,14 @@ import android.os.Handler;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
-import android.widget.FrameLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 public class GameActivity extends Activity implements OnClickListener, Runnable
 {
-	public int mode = 0, punkte = 0, zeit = 600;
-	private float massstab;
+	public long fileSize = 0;
+	public int mode = 0, punkte = 0, zeit = 1200;
 	private Handler handler = new Handler();
 	
 	@Override
@@ -24,7 +23,6 @@ public class GameActivity extends Activity implements OnClickListener, Runnable
 		setContentView(R.layout.game);
 		Button b = (Button) findViewById(R.id.answer1);
 		mode = getIntent().getIntExtra("Mode", 0);
-		massstab = getResources().getDisplayMetrics().density;
 		//b.setText(String.valueOf(mode));
 		b.setOnClickListener(this);
 		b = (Button) findViewById(R.id.answer2);
@@ -41,7 +39,7 @@ public class GameActivity extends Activity implements OnClickListener, Runnable
 
 	public void startRound()
 	{
-		handler.postDelayed(this,100);
+		handler.postDelayed(this,50);
 	}
 	
 	public interface Runnable 
@@ -60,23 +58,23 @@ public class GameActivity extends Activity implements OnClickListener, Runnable
 	
 	public void refresh()
 	{
+		if (mode == 3)
+		{
+			TextView tvZeit = (TextView)findViewById(R.id.zeit);
+			tvZeit.setText(Integer.toString((zeit/20)));
+					
+			ProgressBar progressbar1 = (ProgressBar)findViewById(R.id.progressBar1);
+			progressbar1.setVisibility(View.VISIBLE);
+		}	
 		TextView tvPunkte = (TextView)findViewById(R.id.punkte);
 		tvPunkte.setText(Integer.toString(punkte));
-		
-		TextView tvZeit = (TextView)findViewById(R.id.zeit);
-		tvZeit.setText(Integer.toString((zeit/10)));
-		
-		FrameLayout flZeit = (FrameLayout)findViewById(R.id.bar_time);
-		
-		LayoutParams lpZeit = flZeit.getLayoutParams();
-		lpZeit.width = Math.round( massstab * (zeit/10) * 300 / 60 );
 	}
 	
 	public void countdown()
 	{
 		zeit -= 1;
 		refresh();
-		handler.postDelayed(this,100);
+		handler.postDelayed(this,50);
 	}
 	
 	@Override
@@ -101,10 +99,11 @@ public class GameActivity extends Activity implements OnClickListener, Runnable
 		if(v.getId() == R.id.answer5) 
 		{
 			punkte += 5;
+			zeit += 200;
 		}
 		
 	}
-
+	
 	@Override
 	public void run() 
 	{
