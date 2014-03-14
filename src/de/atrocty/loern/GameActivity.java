@@ -2,14 +2,16 @@ package de.atrocty.loern;
 
 import java.util.Random;
 
+import android.R.string;
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.TypedValue;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import de.atrocty.loern.AutoResizeTextView;
@@ -18,29 +20,24 @@ public class GameActivity extends Activity implements OnClickListener, Runnable
 {
 	public long fileSize = 0;
 	public int mode = 0, punkte = 0;
-	public static int ticks = 1;
+	public static int ticks = 20;
 	public int zeit = 60 * ticks;
 	public static int tick = (1000/ticks);
+	public boolean nextRound = true;
 	private Handler handler = new Handler();
 	private Random random = new Random();
 	
-	String[] Frage = {
+	String[] Frage = 
+		{
 		"Was ist der Sinn des Lebens?",
 		"Wie lautet das Ohmsche Gesetz?",
 		"Ach was, war doch nur Spaß",
 		"lol",
 		"Und hier nochmal eine extra extra EXTRA schön lange Frage zum testen. Mal schauen."
-	};
-	
-	String[] Loesung = {
-			"Was ist der Sinn des Lebens?",
-			"Wie lautet das Ohmsche Gesetz?",
-			"Ach was, war doch nur Spaß",
-			"lol",
-			"Und hier nochmal eine extra extra EXTRA schön lange Antwort zum testen. Mal schauen."
 		};
 	
-	String[] Falsch1 = {
+	String[] Loesung = 
+		{
 			"Was ist der Sinn des Lebens?",
 			"Wie lautet das Ohmsche Gesetz?",
 			"Ach was, war doch nur Spaß",
@@ -48,26 +45,47 @@ public class GameActivity extends Activity implements OnClickListener, Runnable
 			"Und hier nochmal eine extra extra EXTRA schön lange Antwort zum testen. Mal schauen."
 		};
 	
-	String[] Falsch2 = {
+	String[] Falsch1 = 
+		{
 			"Was ist der Sinn des Lebens?",
 			"Wie lautet das Ohmsche Gesetz?",
 			"Ach was, war doch nur Spaß",
 			"lol",
 			"Und hier nochmal eine extra extra EXTRA schön lange Antwort zum testen. Mal schauen."
 		};
-	String[] Falsch3 = {
+	
+	String[] Falsch2 = 
+		{
 			"Was ist der Sinn des Lebens?",
 			"Wie lautet das Ohmsche Gesetz?",
 			"Ach was, war doch nur Spaß",
 			"lol",
 			"Und hier nochmal eine extra extra EXTRA schön lange Antwort zum testen. Mal schauen."
 		};
-	String[] Falsch4 = {
+	String[] Falsch3 = 
+		{
 			"Was ist der Sinn des Lebens?",
 			"Wie lautet das Ohmsche Gesetz?",
 			"Ach was, war doch nur Spaß",
 			"lol",
 			"Und hier nochmal eine extra extra EXTRA schön lange Antwort zum testen. Mal schauen."
+		};
+	String[] Falsch4 = 
+		{
+			"Was ist der Sinn des Lebens?",
+			"Wie lautet das Ohmsche Gesetz?",
+			"Ach was, war doch nur Spaß",
+			"lol",
+			"Und hier nochmal eine extra extra EXTRA schön lange Antwort zum testen. Mal schauen."
+		};
+	
+	String[] Schwierigkeit = 
+		{
+			"3",
+			"2",
+			"1",
+			"4",
+			"5"
 		};
 	
 	@Override
@@ -88,7 +106,9 @@ public class GameActivity extends Activity implements OnClickListener, Runnable
 		b = (Button) findViewById(R.id.answer5);
 		b.setOnClickListener(this);
 		
-		startRound();
+		
+		startRound();	
+		
 	}
 
 	public void startRound()
@@ -125,20 +145,47 @@ public class GameActivity extends Activity implements OnClickListener, Runnable
 		TextView tvPunkte = (TextView)findViewById(R.id.punkte);
 		tvPunkte.setText(Integer.toString(punkte));
 		
-		AutoResizeTextView tvFrage = (AutoResizeTextView)findViewById(R.id.frage);
-		tvFrage.setText(getQuestion(0));
-		
-		AutoResizeTextView tvAntwort = (AutoResizeTextView)findViewById(R.id.tanswer1);
-		tvAntwort.setText(getQuestion(1));
-		tvAntwort = (AutoResizeTextView)findViewById(R.id.tanswer2);
-		tvAntwort.setText(getQuestion(2));
-		tvAntwort.setMinTextSize(20);
-		tvAntwort = (AutoResizeTextView)findViewById(R.id.tanswer3);
-		tvAntwort.setText(getQuestion(3));
-		tvAntwort = (AutoResizeTextView)findViewById(R.id.tanswer4);
-		tvAntwort.setText(getQuestion(4));
-		tvAntwort = (AutoResizeTextView)findViewById(R.id.tanswer5);
-		tvAntwort.setText(getQuestion(5));
+		if (nextRound == true)
+		{
+			nextRound = false;
+			String[] task = getQuestion();
+			AutoResizeTextView tvFrage = (AutoResizeTextView)findViewById(R.id.frage);
+			tvFrage.setMinTextSize(20);
+			tvFrage.setTextSize(20);
+			tvFrage.setText(task[0]);
+			AutoResizeTextView tvAntwort = (AutoResizeTextView)findViewById(R.id.tanswer1);
+			tvAntwort.setMinTextSize(17);
+			tvAntwort.setTextSize(17);
+			tvAntwort.setText(task[1]);
+			tvAntwort = (AutoResizeTextView)findViewById(R.id.tanswer2);
+			tvAntwort.setMinTextSize(17);
+			tvAntwort.setTextSize(17);
+			tvAntwort.setText(task[2]);
+			tvAntwort = (AutoResizeTextView)findViewById(R.id.tanswer3);
+			tvAntwort.setMinTextSize(17);
+			tvAntwort.setTextSize(17);
+			tvAntwort.setText(task[3]);
+			tvAntwort = (AutoResizeTextView)findViewById(R.id.tanswer4);
+			tvAntwort.setMinTextSize(17);
+			tvAntwort.setTextSize(17);
+			tvAntwort.setText(task[4]);
+			tvAntwort = (AutoResizeTextView)findViewById(R.id.tanswer5);
+			tvAntwort.setMinTextSize(17);
+			tvAntwort.setTextSize(17);
+			tvAntwort.setText(task[5]);
+			
+			FrameLayout LED = (FrameLayout)findViewById(R.id.difficulty);
+			if (task[6] == "1")
+				LED.setBackgroundColor(0xAAFF0000);
+			if (task[6] == "2")
+				LED.setBackgroundColor(0xAAFFA500);
+			if (task[6] == "3")
+				LED.setBackgroundColor(0xAAFFFF00);
+			if (task[6] == "4")
+				LED.setBackgroundColor(0xAA7FFF00);
+			if (task[6] == "5")
+				LED.setBackgroundColor(0xAA3CB371);		
+		}
 	}
 	
 	public void countdown()
@@ -149,26 +196,10 @@ public class GameActivity extends Activity implements OnClickListener, Runnable
 	}
 	
 
-	public String getQuestion(int i)
+	public String[] getQuestion()
 	{		
 		int zufall = (int) (Frage.length * random.nextFloat());
-		switch (i) 
-		{
-		case 0:
-			return Frage[zufall];
-		case 1:
-			return Loesung[zufall];
-		case 2:
-			return Falsch1[zufall];
-		case 3:
-			return Falsch2[zufall];
-		case 4:
-			return Falsch3[zufall];
-		case 5:
-			return Falsch4[zufall];
-		default:
-			return null;
-		}
+		return new String[] { Frage[zufall], Loesung[zufall], Falsch1[zufall], Falsch2[zufall], Falsch3[zufall], Falsch4[zufall], Schwierigkeit[zufall]};	
 	}
 	
 	@Override
@@ -176,24 +207,29 @@ public class GameActivity extends Activity implements OnClickListener, Runnable
 	{
 		if(v.getId( )== R.id.answer1) 
 		{
-			punkte += 1;			
+			punkte += 1;
+			nextRound = true;
 		}
 		if(v.getId() == R.id.answer2) 
 		{
 			punkte += 2;
+			nextRound = true;
 		}
 		if(v.getId() == R.id.answer3) 
 		{
 			punkte += 3;
+			nextRound = true;
 		}
 		if(v.getId() == R.id.answer4) 
 		{
 			punkte += 4;
+			nextRound = true;
 		}
 		if(v.getId() == R.id.answer5) 
 		{
 			punkte += 5;
 			zeit += 10 * ticks;
+			nextRound = true;
 		}
 		
 	}
