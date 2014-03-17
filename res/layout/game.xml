@@ -52,7 +52,7 @@
         <de.atrocty.loern.AutoResizeTextView
             android:id="@+id/frage"
             android:layout_width="235dp"
-            android:layout_height="50dp"
+            android:layout_height="60dp"
             android:gravity="center"
             android:text="Frage"
             android:textAppearance="?android:attr/textAppearanceLarge"
@@ -134,6 +134,7 @@
                 android:gravity="center"
                 android:text="Antwort 2"
                 android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textSize="17sp"
                 tools:ignore="HardcodedText" />
 
         </LinearLayout>

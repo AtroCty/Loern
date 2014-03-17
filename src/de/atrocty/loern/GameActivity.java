@@ -2,9 +2,9 @@ package de.atrocty.loern;
 
 import java.util.Random;
 
-import android.R.string;
 import android.app.Activity;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Menu;
@@ -22,6 +22,7 @@ public class GameActivity extends Activity implements OnClickListener, Runnable
 	public int mode = 0, punkte = 0;
 	public static int ticks = 20;
 	public int zeit = 60 * ticks;
+	public int LoesungPosi = 0;
 	public static int tick = (1000/ticks);
 	public boolean nextRound = true;
 	private Handler handler = new Handler();
@@ -29,61 +30,71 @@ public class GameActivity extends Activity implements OnClickListener, Runnable
 	
 	String[] Frage = 
 		{
-		"Was ist der Sinn des Lebens?",
-		"Wie lautet das Ohmsche Gesetz?",
-		"Ach was, war doch nur Spaß",
-		"lol",
-		"Und hier nochmal eine extra extra EXTRA schön lange Frage zum testen. Mal schauen."
+		"Kategorie 1",
+		"Kategorie 2",
+		"Kategorie 3",
+		"Kategorie 4",
+		"Kategorie 5"
 		};
 	
 	String[] Loesung = 
 		{
-			"Was ist der Sinn des Lebens?",
-			"Wie lautet das Ohmsche Gesetz?",
-			"Ach was, war doch nur Spaß",
-			"lol",
-			"Und hier nochmal eine extra extra EXTRA schön lange Antwort zum testen. Mal schauen."
+			"Richtig",
+			"Richtig",
+			"Richtig",
+			"Richtig",
+			"Richtig",
+			"Richtig",
+			"Richtig"
 		};
 	
 	String[] Falsch1 = 
 		{
-			"Was ist der Sinn des Lebens?",
-			"Wie lautet das Ohmsche Gesetz?",
-			"Ach was, war doch nur Spaß",
-			"lol",
-			"Und hier nochmal eine extra extra EXTRA schön lange Antwort zum testen. Mal schauen."
+			"Falsch1",
+			"Falsch1",
+			"Falsch1",
+			"Falsch1",
+			"Falsch1",
+			"Falsch1",
+			"Falsch1"
 		};
 	
 	String[] Falsch2 = 
 		{
-			"Was ist der Sinn des Lebens?",
-			"Wie lautet das Ohmsche Gesetz?",
-			"Ach was, war doch nur Spaß",
-			"lol",
-			"Und hier nochmal eine extra extra EXTRA schön lange Antwort zum testen. Mal schauen."
+			"Falsch2",
+			"Falsch2",
+			"Falsch2",
+			"Falsch2",
+			"Falsch2",
+			"Falsch2",
+			"Falsch2"
 		};
 	String[] Falsch3 = 
 		{
-			"Was ist der Sinn des Lebens?",
-			"Wie lautet das Ohmsche Gesetz?",
-			"Ach was, war doch nur Spaß",
-			"lol",
-			"Und hier nochmal eine extra extra EXTRA schön lange Antwort zum testen. Mal schauen."
+			"Falsch3",
+			"Falsch3",
+			"Falsch3",
+			"Falsch3",
+			"Falsch3",
+			"Falsch3",
+			"Falsch3"
 		};
 	String[] Falsch4 = 
 		{
-			"Was ist der Sinn des Lebens?",
-			"Wie lautet das Ohmsche Gesetz?",
-			"Ach was, war doch nur Spaß",
-			"lol",
-			"Und hier nochmal eine extra extra EXTRA schön lange Antwort zum testen. Mal schauen."
+			"Falsch4",
+			"Falsch4",
+			"Falsch4",
+			"Falsch4",
+			"Falsch4",
+			"Falsch4",
+			"Falsch4"
 		};
 	
 	String[] Schwierigkeit = 
 		{
-			"3",
-			"2",
 			"1",
+			"2",
+			"3",
 			"4",
 			"5"
 		};
@@ -105,7 +116,6 @@ public class GameActivity extends Activity implements OnClickListener, Runnable
 		b.setOnClickListener(this);
 		b = (Button) findViewById(R.id.answer5);
 		b.setOnClickListener(this);
-		
 		
 		startRound();	
 		
@@ -149,42 +159,45 @@ public class GameActivity extends Activity implements OnClickListener, Runnable
 		{
 			nextRound = false;
 			String[] task = getQuestion();
+			String Frage = task[0];
+			String[] antwort = { task[1], task[2], task[3], task[4], task[5] };
+			shuffleArray(antwort);
 			AutoResizeTextView tvFrage = (AutoResizeTextView)findViewById(R.id.frage);
-			tvFrage.setMinTextSize(20);
-			tvFrage.setTextSize(20);
-			tvFrage.setText(task[0]);
+			tvFrage.setMinTextSize(18);
+			tvFrage.setTextSize(28);
+			tvFrage.setText(Frage);
 			AutoResizeTextView tvAntwort = (AutoResizeTextView)findViewById(R.id.tanswer1);
-			tvAntwort.setMinTextSize(17);
-			tvAntwort.setTextSize(17);
-			tvAntwort.setText(task[1]);
+			tvAntwort.setMinTextSize(18);
+			tvAntwort.setTextSize(18);
+			tvAntwort.setText(antwort[0]);
 			tvAntwort = (AutoResizeTextView)findViewById(R.id.tanswer2);
-			tvAntwort.setMinTextSize(17);
-			tvAntwort.setTextSize(17);
-			tvAntwort.setText(task[2]);
+			tvAntwort.setMinTextSize(18);
+			tvAntwort.setTextSize(18);
+			tvAntwort.setText(antwort[1]);
 			tvAntwort = (AutoResizeTextView)findViewById(R.id.tanswer3);
-			tvAntwort.setMinTextSize(17);
-			tvAntwort.setTextSize(17);
-			tvAntwort.setText(task[3]);
+			tvAntwort.setMinTextSize(18);
+			tvAntwort.setTextSize(18);
+			tvAntwort.setText(antwort[2]);
 			tvAntwort = (AutoResizeTextView)findViewById(R.id.tanswer4);
-			tvAntwort.setMinTextSize(17);
-			tvAntwort.setTextSize(17);
-			tvAntwort.setText(task[4]);
+			tvAntwort.setMinTextSize(18);
+			tvAntwort.setTextSize(18);
+			tvAntwort.setText(antwort[3]);
 			tvAntwort = (AutoResizeTextView)findViewById(R.id.tanswer5);
-			tvAntwort.setMinTextSize(17);
-			tvAntwort.setTextSize(17);
-			tvAntwort.setText(task[5]);
+			tvAntwort.setMinTextSize(18);
+			tvAntwort.setTextSize(18);
+			tvAntwort.setText(antwort[4]);
 			
 			FrameLayout LED = (FrameLayout)findViewById(R.id.difficulty);
 			if (task[6] == "1")
-				LED.setBackgroundColor(0xAAFF0000);
+				LED.getBackground().setColorFilter(Color.parseColor("#ff2222"), PorterDuff.Mode.DARKEN);
 			if (task[6] == "2")
-				LED.setBackgroundColor(0xAAFFA500);
+				LED.getBackground().setColorFilter(Color.parseColor("#ff9934"), PorterDuff.Mode.DARKEN);
 			if (task[6] == "3")
-				LED.setBackgroundColor(0xAAFFFF00);
+				LED.getBackground().setColorFilter(Color.parseColor("#ffff00"), PorterDuff.Mode.DARKEN);
 			if (task[6] == "4")
-				LED.setBackgroundColor(0xAA7FFF00);
+				LED.getBackground().setColorFilter(Color.parseColor("#99ff34"), PorterDuff.Mode.DARKEN);
 			if (task[6] == "5")
-				LED.setBackgroundColor(0xAA3CB371);		
+				LED.getBackground().setColorFilter(Color.parseColor("#00cc00"), PorterDuff.Mode.DARKEN);		
 		}
 	}
 	
@@ -207,31 +220,58 @@ public class GameActivity extends Activity implements OnClickListener, Runnable
 	{
 		if(v.getId( )== R.id.answer1) 
 		{
-			punkte += 1;
+			if (LoesungPosi == 1)
+				punkte += 5;
 			nextRound = true;
 		}
 		if(v.getId() == R.id.answer2) 
 		{
-			punkte += 2;
+			if (LoesungPosi == 2)
+				punkte += 5;
 			nextRound = true;
 		}
 		if(v.getId() == R.id.answer3) 
 		{
-			punkte += 3;
+			if (LoesungPosi == 3)
+				punkte += 5;
 			nextRound = true;
 		}
 		if(v.getId() == R.id.answer4) 
 		{
-			punkte += 4;
+			if (LoesungPosi == 4)
+				punkte += 5;
 			nextRound = true;
 		}
 		if(v.getId() == R.id.answer5) 
 		{
-			punkte += 5;
-			zeit += 10 * ticks;
+			
+			if (LoesungPosi == 5)
+				punkte += 5;
 			nextRound = true;
 		}
 		
+	}
+	
+	public void shuffleArray(String[] ar)
+	{
+	    Random rnd = new Random();
+	    boolean isset = false;
+	    for (int i = ar.length - 1; i > 0; i--)
+	    {
+		    int index = rnd.nextInt(i + 1);
+		    if ((index == 0) && (isset == false))
+		    {
+		    	isset = true;
+		    	LoesungPosi = i+1;
+		    }
+		    else if ((i == 1) && (isset == false))
+		    {
+		    	LoesungPosi = 1;
+		    }
+		    String a = ar[index];
+		    ar[index] = ar[i];
+		    ar[i] = a;
+	    }
 	}
 	
 	@Override

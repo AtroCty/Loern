@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="de.atrocty.loern"
-    android:versionCode="12001"
+    android:versionCode="12002"
     android:versionName="@string/version">
 
     <uses-sdk
