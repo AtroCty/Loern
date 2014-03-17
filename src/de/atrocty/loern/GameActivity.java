@@ -5,14 +5,19 @@ import java.util.Random;
 import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.LinearInterpolator;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import de.atrocty.loern.AutoResizeTextView;
 
@@ -27,6 +32,7 @@ public class GameActivity extends Activity implements OnClickListener, Runnable
 	public boolean nextRound = true;
 	private Handler handler = new Handler();
 	private Random random = new Random();
+	boolean answergiven = false;
 	
 	String[] Frage = 
 		{
@@ -104,19 +110,8 @@ public class GameActivity extends Activity implements OnClickListener, Runnable
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.game);
-		Button b = (Button) findViewById(R.id.answer1);
 		mode = getIntent().getIntExtra("Mode", 0);
-		//b.setText(String.valueOf(mode));
-		b.setOnClickListener(this);
-		b = (Button) findViewById(R.id.answer2);
-		b.setOnClickListener(this);
-		b = (Button) findViewById(R.id.answer3);
-		b.setOnClickListener(this);
-		b = (Button) findViewById(R.id.answer4);
-		b.setOnClickListener(this);
-		b = (Button) findViewById(R.id.answer5);
-		b.setOnClickListener(this);
-		
+				
 		startRound();	
 		
 	}
@@ -142,6 +137,53 @@ public class GameActivity extends Activity implements OnClickListener, Runnable
 	
 	public void refresh()
 	{
+		RelativeLayout fl = (RelativeLayout)findViewById(R.id.Mainmenu);
+		if (answergiven == true)
+		{	
+			fl.setFocusable(true);
+			fl.setOnClickListener(this);
+			fl.setClickable(true);
+			
+			Button b = (Button) findViewById(R.id.answer1);
+			b.setOnClickListener(null);
+			b.setClickable(false);
+			b = (Button) findViewById(R.id.answer2);
+			b.setOnClickListener(null);
+			b.setClickable(false);
+			b = (Button) findViewById(R.id.answer3);
+			b.setOnClickListener(null);
+			b.setClickable(false);
+			b = (Button) findViewById(R.id.answer4);
+			b.setOnClickListener(null);
+			b.setClickable(false);
+			b = (Button) findViewById(R.id.answer5);
+			b.setOnClickListener(null);
+			b.setClickable(false);
+		}
+		else
+		{
+			fl.setFocusable(false);
+			fl.setOnClickListener(null);
+			fl.setClickable(false);
+			
+			Button b = (Button) findViewById(R.id.answer1);
+			b.setOnClickListener(this);
+			b.setClickable(true);
+			b = (Button) findViewById(R.id.answer2);
+			b.setOnClickListener(this);
+			b.setClickable(true);
+			b = (Button) findViewById(R.id.answer3);
+			b.setOnClickListener(this);
+			b.setClickable(true);
+			b = (Button) findViewById(R.id.answer4);
+			b.setOnClickListener(this);
+			b.setClickable(true);
+			b = (Button) findViewById(R.id.answer5);
+			b.setOnClickListener(this);
+			b.setClickable(true);
+			
+		}
+		
 		if (mode == 3)
 		{
 			TextView tvZeit = (TextView)findViewById(R.id.zeit);
@@ -162,26 +204,32 @@ public class GameActivity extends Activity implements OnClickListener, Runnable
 			String Frage = task[0];
 			String[] antwort = { task[1], task[2], task[3], task[4], task[5] };
 			shuffleArray(antwort);
+			
 			AutoResizeTextView tvFrage = (AutoResizeTextView)findViewById(R.id.frage);
 			tvFrage.setMinTextSize(18);
 			tvFrage.setTextSize(28);
 			tvFrage.setText(Frage);
+			
 			AutoResizeTextView tvAntwort = (AutoResizeTextView)findViewById(R.id.tanswer1);
 			tvAntwort.setMinTextSize(18);
 			tvAntwort.setTextSize(18);
 			tvAntwort.setText(antwort[0]);
+			
 			tvAntwort = (AutoResizeTextView)findViewById(R.id.tanswer2);
 			tvAntwort.setMinTextSize(18);
 			tvAntwort.setTextSize(18);
 			tvAntwort.setText(antwort[1]);
+			
 			tvAntwort = (AutoResizeTextView)findViewById(R.id.tanswer3);
 			tvAntwort.setMinTextSize(18);
 			tvAntwort.setTextSize(18);
 			tvAntwort.setText(antwort[2]);
+			
 			tvAntwort = (AutoResizeTextView)findViewById(R.id.tanswer4);
 			tvAntwort.setMinTextSize(18);
 			tvAntwort.setTextSize(18);
 			tvAntwort.setText(antwort[3]);
+			
 			tvAntwort = (AutoResizeTextView)findViewById(R.id.tanswer5);
 			tvAntwort.setMinTextSize(18);
 			tvAntwort.setTextSize(18);
@@ -203,7 +251,8 @@ public class GameActivity extends Activity implements OnClickListener, Runnable
 	
 	public void countdown()
 	{
-		zeit -= 1;
+		if (answergiven==false)
+			zeit -= 1;
 		refresh();
 		handler.postDelayed(this,tick);
 	}
@@ -217,39 +266,60 @@ public class GameActivity extends Activity implements OnClickListener, Runnable
 	
 	@Override
 	public void onClick(View v) 
-	{
+	{		
 		if(v.getId( )== R.id.answer1) 
 		{
 			if (LoesungPosi == 1)
-				punkte += 5;
-			nextRound = true;
+				rightAnswer();
+			answergiven = true;
 		}
 		if(v.getId() == R.id.answer2) 
 		{
 			if (LoesungPosi == 2)
-				punkte += 5;
-			nextRound = true;
+				rightAnswer();
+			answergiven = true;
 		}
 		if(v.getId() == R.id.answer3) 
 		{
 			if (LoesungPosi == 3)
-				punkte += 5;
-			nextRound = true;
+				rightAnswer();
+			answergiven = true;
 		}
 		if(v.getId() == R.id.answer4) 
 		{
 			if (LoesungPosi == 4)
-				punkte += 5;
-			nextRound = true;
+				rightAnswer();
+			answergiven = true;
 		}
 		if(v.getId() == R.id.answer5) 
 		{
-			
 			if (LoesungPosi == 5)
-				punkte += 5;
+				rightAnswer();
+			answergiven = true;
+		}
+		
+		Button b = (Button) findViewById(R.id.answer1);
+		b.setBackgroundResource(R.drawable.right);
+		AnimationDrawable frameAnimation = (AnimationDrawable) b.getBackground();
+		
+		frameAnimation.start();
+	    
+		//b.getBackground().setColorFilter(Color.parseColor("#cc0000"), PorterDuff.Mode.DARKEN);
+		if((v.getId() == R.id.Mainmenu) && (answergiven == true))
+		{
+			answergiven = false;
+			frameAnimation.stop();
+			frameAnimation.selectDrawable(0);
 			nextRound = true;
 		}
 		
+		
+			
+	}
+	
+	public void rightAnswer()
+	{
+		punkte += 5;
 	}
 	
 	public void shuffleArray(String[] ar)
