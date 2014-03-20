@@ -107,10 +107,8 @@ public class GameActivity extends Activity implements OnClickListener, Runnable
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.game);
-		mode = getIntent().getIntExtra("Mode", 0);
-				
+		mode = getIntent().getIntExtra("Mode", 0);	
 		startRound();	
-		
 	}
 
 	public void startRound()
