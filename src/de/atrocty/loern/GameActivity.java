@@ -11,9 +11,6 @@ import android.os.Handler;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
-import android.view.animation.LinearInterpolator;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
@@ -119,6 +116,38 @@ public class GameActivity extends Activity implements OnClickListener, Runnable
 	public void startRound()
 	{
 		handler.postDelayed(this,tick);
+	}
+	
+	public void resetButtons()
+	{
+		Button b = null;
+		for (int i = 1; i < 6; i++) 
+		{
+			switch (i) 
+			{
+			case 1:
+				b = (Button) findViewById(R.id.answer1);
+				break;
+			case 2:
+				b = (Button) findViewById(R.id.answer2);
+				break;
+			case 3:
+				b = (Button) findViewById(R.id.answer3);
+				break;
+			case 4:
+				b = (Button) findViewById(R.id.answer4);
+				break;
+			case 5:
+				b = (Button) findViewById(R.id.answer5);
+				break;
+			default:
+				break;
+			}
+			b.setBackgroundResource(R.drawable.wrong);
+			AnimationDrawable frameAnimation = (AnimationDrawable) b.getBackground();
+			frameAnimation.stop();
+			frameAnimation.selectDrawable(0);
+		}
 	}
 	
 	public interface Runnable 
@@ -267,54 +296,99 @@ public class GameActivity extends Activity implements OnClickListener, Runnable
 	@Override
 	public void onClick(View v) 
 	{		
+		boolean rightanswer = false;
+		Button ans = null;
 		if(v.getId( )== R.id.answer1) 
 		{
 			if (LoesungPosi == 1)
+			{
 				rightAnswer();
+				rightanswer = true;
+			}
 			answergiven = true;
+			ans = (Button) findViewById(R.id.answer1);
 		}
 		if(v.getId() == R.id.answer2) 
 		{
 			if (LoesungPosi == 2)
+			{
 				rightAnswer();
+				rightanswer = true;
+			}
 			answergiven = true;
+			ans = (Button) findViewById(R.id.answer2);
 		}
 		if(v.getId() == R.id.answer3) 
 		{
 			if (LoesungPosi == 3)
+			{
 				rightAnswer();
+				rightanswer = true;
+			}
 			answergiven = true;
+			ans = (Button) findViewById(R.id.answer3);
 		}
 		if(v.getId() == R.id.answer4) 
 		{
 			if (LoesungPosi == 4)
+			{
 				rightAnswer();
+				rightanswer = true;
+			}
 			answergiven = true;
+			ans = (Button) findViewById(R.id.answer4);
 		}
 		if(v.getId() == R.id.answer5) 
 		{
 			if (LoesungPosi == 5)
+			{
 				rightAnswer();
+				rightanswer = true;
+			}
 			answergiven = true;
+			ans = (Button) findViewById(R.id.answer5);
 		}
 		
-		Button b = (Button) findViewById(R.id.answer1);
-		b.setBackgroundResource(R.drawable.right);
-		AnimationDrawable frameAnimation = (AnimationDrawable) b.getBackground();
-		
-		frameAnimation.start();
+		AnimationDrawable frameAnimation = null;
+		if ((rightanswer == true) && (v.getId() != R.id.Mainmenu))
+			ans.setBackgroundResource(R.drawable.roundbuttonright);
+		else if ((rightanswer == false) && (v.getId() != R.id.Mainmenu))
+		{
+			ans.setBackgroundResource(R.drawable.roundbuttonwrong);
+			switch (LoesungPosi) 
+			{
+			case 1:
+				ans = (Button) findViewById(R.id.answer1);			
+				break;
+			case 2:
+				ans = (Button) findViewById(R.id.answer2);			
+				break;
+			case 3:
+				ans = (Button) findViewById(R.id.answer3);			
+				break;
+			case 4:
+				ans = (Button) findViewById(R.id.answer4);			
+				break;
+			case 5:
+				ans = (Button) findViewById(R.id.answer5);			
+				break;
+			default:
+				break;
+			}
+			ans.setBackgroundResource(R.drawable.right);
+			frameAnimation = (AnimationDrawable) ans.getBackground();
+		}
+		if (frameAnimation != null)
+			frameAnimation.start();
 	    
 		//b.getBackground().setColorFilter(Color.parseColor("#cc0000"), PorterDuff.Mode.DARKEN);
 		if((v.getId() == R.id.Mainmenu) && (answergiven == true))
 		{
 			answergiven = false;
-			frameAnimation.stop();
-			frameAnimation.selectDrawable(0);
+			resetButtons();
 			nextRound = true;
 		}
 		
-		
-			
 	}
 	
 	public void rightAnswer()
