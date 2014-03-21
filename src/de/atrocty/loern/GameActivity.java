@@ -1,5 +1,15 @@
 package de.atrocty.loern;
 
+//----------------------------------------------------------------------
+// Titel     : Gameactivity (Quiz-Activity)
+//----------------------------------------------------------------------
+// Funktion  : Starten des Quiz-Bildschirmes und des Spiels.
+//----------------------------------------------------------------------
+// Sprache   : Java
+// Datum     : 21. Maerz 2014
+// Autor     : Timm Schuette, Jannik Weihrauch, Maik Habben
+//----------------------------------------------------------------------
+
 import java.util.Random;
 
 import android.app.Activity;
@@ -20,8 +30,12 @@ import de.atrocty.loern.AutoResizeTextView;
 
 public class GameActivity extends Activity implements OnClickListener, Runnable
 {
+	//---------------------------------------------------------------------------
+	// 	Globale Variablen
+	//---------------------------------------------------------------------------
+	
 	public long fileSize = 0;
-	public int mode = 0, punkte = 0;
+	public int mode = 0, punkte = 0, zufall = 0;
 	public static int ticks = 20;
 	public int zeit = 60 * ticks;
 	public int LoesungPosi = 0;
@@ -31,13 +45,18 @@ public class GameActivity extends Activity implements OnClickListener, Runnable
 	private Random random = new Random();
 	boolean answergiven = false;
 	
+	//---------------------------------------------------------------------------
+	// 	Dummy-Fragen (Später durch Datenbank ersetzt)
+	//---------------------------------------------------------------------------
 	String[] Frage = 
 		{
-		"Kategorie 1",
-		"Kategorie 2",
-		"Kategorie 3",
-		"Kategorie 4",
-		"Kategorie 5"
+		"Frage 1",
+		"Frage 2",
+		"Frage 3",
+		"Frage 4",
+		"Frage 5",
+		"Frage 6",
+		"Frage 7"
 		};
 	
 	String[] Loesung = 
@@ -93,28 +112,41 @@ public class GameActivity extends Activity implements OnClickListener, Runnable
 			"Falsch4"
 		};
 	
-	String[] Schwierigkeit = 
+	int[] Schwierigkeit = 
 		{
-			"1",
-			"2",
-			"3",
-			"4",
-			"5"
+			3,
+			3,
+			3,
+			3,
+			3,
+			3,
+			3
 		};
-	
+	//---------------------------------------------------------------------------
+	// 	Initialiserungen beim ersten Aufruf
+	//---------------------------------------------------------------------------
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.game);
+		// Uebergabewert aus anderer Activity
 		mode = getIntent().getIntExtra("Mode", 0);	
 		startRound();	
 	}
-
+	
+	//---------------------------------------------------------------------------
+	// 	Starten des Handlers
+	//---------------------------------------------------------------------------
+	
 	public void startRound()
 	{
 		handler.postDelayed(this,tick);
 	}
+	
+	//---------------------------------------------------------------------------
+	// 	Rücksetzen der Button-Layout-Animation
+	//---------------------------------------------------------------------------
 	
 	public void resetButtons()
 	{
@@ -153,14 +185,20 @@ public class GameActivity extends Activity implements OnClickListener, Runnable
 		public void run();
 	}
 	
+	//---------------------------------------------------------------------------
+	// 	Optionsmenue (Benoetigen wir in dieser Activity nicht)
+	//---------------------------------------------------------------------------
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) 
 	{
-		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
+	
+	//---------------------------------------------------------------------------
+	// 	Layout-Aktualisierungen pro Tick
+	//---------------------------------------------------------------------------
 	
 	public void refresh()
 	{
@@ -263,15 +301,15 @@ public class GameActivity extends Activity implements OnClickListener, Runnable
 			tvAntwort.setText(antwort[4]);
 			
 			FrameLayout LED = (FrameLayout)findViewById(R.id.difficulty);
-			if (task[6] == "1")
+			if (Schwierigkeit[zufall] == 1)
 				LED.getBackground().setColorFilter(Color.parseColor("#ff2222"), PorterDuff.Mode.DARKEN);
-			if (task[6] == "2")
+			if (Schwierigkeit[zufall] == 2)
 				LED.getBackground().setColorFilter(Color.parseColor("#ff9934"), PorterDuff.Mode.DARKEN);
-			if (task[6] == "3")
+			if (Schwierigkeit[zufall] == 3)
 				LED.getBackground().setColorFilter(Color.parseColor("#ffff00"), PorterDuff.Mode.DARKEN);
-			if (task[6] == "4")
+			if (Schwierigkeit[zufall] == 4)
 				LED.getBackground().setColorFilter(Color.parseColor("#99ff34"), PorterDuff.Mode.DARKEN);
-			if (task[6] == "5")
+			if (Schwierigkeit[zufall] == 5)
 				LED.getBackground().setColorFilter(Color.parseColor("#00cc00"), PorterDuff.Mode.DARKEN);		
 		}
 	}
@@ -284,11 +322,11 @@ public class GameActivity extends Activity implements OnClickListener, Runnable
 		handler.postDelayed(this,tick);
 	}
 	
-
+	
 	public String[] getQuestion()
 	{		
-		int zufall = (int) (Frage.length * random.nextFloat());
-		return new String[] { Frage[zufall], Loesung[zufall], Falsch1[zufall], Falsch2[zufall], Falsch3[zufall], Falsch4[zufall], Schwierigkeit[zufall]};	
+		zufall = (int) (Frage.length * random.nextFloat());
+		return new String[] { Frage[zufall], Loesung[zufall], Falsch1[zufall], Falsch2[zufall], Falsch3[zufall], Falsch4[zufall]};	
 	}
 	
 	@Override
@@ -303,6 +341,11 @@ public class GameActivity extends Activity implements OnClickListener, Runnable
 				rightAnswer();
 				rightanswer = true;
 			}
+			else
+			{
+				if (Schwierigkeit[zufall]>1)
+					Schwierigkeit[zufall]--;
+			}
 			answergiven = true;
 			ans = (Button) findViewById(R.id.answer1);
 		}
@@ -312,6 +355,11 @@ public class GameActivity extends Activity implements OnClickListener, Runnable
 			{
 				rightAnswer();
 				rightanswer = true;
+			}
+			else
+			{
+				if (Schwierigkeit[zufall]>1)
+					Schwierigkeit[zufall]--;
 			}
 			answergiven = true;
 			ans = (Button) findViewById(R.id.answer2);
@@ -323,6 +371,11 @@ public class GameActivity extends Activity implements OnClickListener, Runnable
 				rightAnswer();
 				rightanswer = true;
 			}
+			else
+			{
+				if (Schwierigkeit[zufall]>1)
+					Schwierigkeit[zufall]--;
+			}
 			answergiven = true;
 			ans = (Button) findViewById(R.id.answer3);
 		}
@@ -333,6 +386,11 @@ public class GameActivity extends Activity implements OnClickListener, Runnable
 				rightAnswer();
 				rightanswer = true;
 			}
+			else
+			{
+				if (Schwierigkeit[zufall]>1)
+					Schwierigkeit[zufall]--;
+			}
 			answergiven = true;
 			ans = (Button) findViewById(R.id.answer4);
 		}
@@ -342,6 +400,11 @@ public class GameActivity extends Activity implements OnClickListener, Runnable
 			{
 				rightAnswer();
 				rightanswer = true;
+			}
+			else
+			{
+				if (Schwierigkeit[zufall]>1)
+					Schwierigkeit[zufall]--;
 			}
 			answergiven = true;
 			ans = (Button) findViewById(R.id.answer5);
@@ -379,7 +442,6 @@ public class GameActivity extends Activity implements OnClickListener, Runnable
 		if (frameAnimation != null)
 			frameAnimation.start();
 	    
-		//b.getBackground().setColorFilter(Color.parseColor("#cc0000"), PorterDuff.Mode.DARKEN);
 		if((v.getId() == R.id.Mainmenu) && (answergiven == true))
 		{
 			answergiven = false;
@@ -392,6 +454,8 @@ public class GameActivity extends Activity implements OnClickListener, Runnable
 	public void rightAnswer()
 	{
 		punkte += 5;
+		if (Schwierigkeit[zufall] < 5)
+			Schwierigkeit[zufall]++;
 	}
 	
 	public void shuffleArray(String[] ar)
