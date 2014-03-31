@@ -11,8 +11,8 @@ package de.atrocty.loern;
 //----------------------------------------------------------------------
 
 import java.util.Random;
-
 import android.app.Activity;
+import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.AnimationDrawable;
@@ -25,7 +25,6 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 import de.atrocty.loern.AutoResizeTextView;
 
 public class GameActivity extends Activity implements OnClickListener, Runnable
@@ -50,78 +49,97 @@ public class GameActivity extends Activity implements OnClickListener, Runnable
 	//---------------------------------------------------------------------------
 	String[] Frage = 
 		{
-		"Frage 1",
-		"Frage 2",
-		"Frage 3",
-		"Frage 4",
-		"Frage 5",
-		"Frage 6",
-		"Frage 7"
+			"Komplexe Automatisierungsgeräte tauschen Nachrichten in der Aktor-Sensor-Ebene häufig nach dem Master-Slave-Verfahren mit zyklischem Poling aus. Welches besondere Merkmal ist damit verbunden?",
+			"Frage 2",
 		};
 	
 	String[] Loesung = 
 		{
-			"Richtig",
-			"Richtig",
-			"Richtig",
-			"Richtig",
-			"Richtig",
-			"Richtig",
+			"Eine garantierte gleichbleibende Abfragezykluszeit.",
 			"Richtig"
 		};
 	
 	String[] Falsch1 = 
 		{
-			"Falsch1",
-			"Falsch1",
-			"Falsch1",
-			"Falsch1",
-			"Falsch1",
-			"Falsch1",
+			"Jedem Sensor ist ein eigener Master zugeordnet.",
 			"Falsch1"
 		};
 	
 	String[] Falsch2 = 
 		{
-			"Falsch2",
-			"Falsch2",
-			"Falsch2",
-			"Falsch2",
-			"Falsch2",
-			"Falsch2",
+			"Die Sensoren übernehmen die Masterfunktion und können somit sehr schnell Daten an das Automatisierungsgerät übertragen.",
 			"Falsch2"
 		};
 	String[] Falsch3 = 
 		{
-			"Falsch3",
-			"Falsch3",
-			"Falsch3",
-			"Falsch3",
-			"Falsch3",
-			"Falsch3",
+			"Es können nur Aktoren über den Bus mit Daten versorgt werden.",
 			"Falsch3"
 		};
 	String[] Falsch4 = 
 		{
-			"Falsch4",
-			"Falsch4",
-			"Falsch4",
-			"Falsch4",
-			"Falsch4",
-			"Falsch4",
+			"Zwischen Master und Slave existiert eine parallele Datenverbindung.",
 			"Falsch4"
 		};
 	
 	int[] Schwierigkeit = 
 		{
 			3,
-			3,
-			3,
-			3,
-			3,
-			3,
 			3
 		};
+	
+	String[][] Question = 
+	{
+		{"1","2","3","4"}, 	//ID
+		//Fragen
+		{
+			"Komplexe Automatisierungsgeräte tauschen Nachrichten in der Aktor-Sensor-Ebene häufig nach dem Master-Slave-Verfahren mit zyklischem Poling aus. Welches besondere Merkmal ist damit verbunden?",
+			"Frage2",
+			"Frage3",
+			"Frage4"
+		},
+		// Loesung
+		{
+			"Eine garantierte gleichbleibende Abfragezykluszeit.",
+			"Richtig",
+			"Richtig",
+			"Richtig"
+		},
+		//Falsch1
+		{
+			"Jedem Sensor ist ein eigener Master zugeordnet.",
+			"Falsch 1",
+			"Falsch 1",
+			"Falsch 1"
+		},
+		//Falsch2
+		{
+			"Die Sensoren übernehmen die Masterfunktion und können somit sehr schnell Daten an das Automatisierungsgerät übertragen.",
+			"Falsch 2",
+			"Falsch 2",
+			"Falsch 2"
+		},
+		//Falsch3
+		{
+			"Es können nur Aktoren über den Bus mit Daten versorgt werden.",
+			"Falsch 3",
+			"Falsch 3",
+			"Falsch 3",
+		},
+		//Falsch4
+		{
+			"Zwischen Master und Slave existiert eine parallele Datenverbindung.",
+			"Falsch 4",
+			"Falsch 4",
+			"Falsch 4",
+		},
+		//Schwierigkeit
+		{
+			"3",
+			"3",
+			"3",
+			"3"
+		}
+	};
 	//---------------------------------------------------------------------------
 	// 	Initialiserungen beim ersten Aufruf
 	//---------------------------------------------------------------------------
@@ -250,17 +268,12 @@ public class GameActivity extends Activity implements OnClickListener, Runnable
 		}
 		
 		if (mode == 3)
-		{
-			TextView tvZeit = (TextView)findViewById(R.id.zeit);
-			tvZeit.setText(Integer.toString((zeit/ticks)));
-					
+		{					
 			ProgressBar progressbar1 = (ProgressBar)findViewById(R.id.progressBar1);
 			progressbar1.setVisibility(View.VISIBLE);
 			progressbar1.setMax(60*ticks);
 			progressbar1.setProgress(zeit);
 		}	
-		TextView tvPunkte = (TextView)findViewById(R.id.punkte);
-		tvPunkte.setText(Integer.toString(punkte));
 		
 		if (nextRound == true)
 		{
@@ -271,32 +284,32 @@ public class GameActivity extends Activity implements OnClickListener, Runnable
 			shuffleArray(antwort);
 			
 			AutoResizeTextView tvFrage = (AutoResizeTextView)findViewById(R.id.frage);
-			tvFrage.setMinTextSize(18);
+			tvFrage.setMinTextSize(12);
 			tvFrage.setTextSize(28);
 			tvFrage.setText(Frage);
 			
 			AutoResizeTextView tvAntwort = (AutoResizeTextView)findViewById(R.id.tanswer1);
-			tvAntwort.setMinTextSize(18);
+			tvAntwort.setMinTextSize(11);
 			tvAntwort.setTextSize(18);
 			tvAntwort.setText(antwort[0]);
 			
 			tvAntwort = (AutoResizeTextView)findViewById(R.id.tanswer2);
-			tvAntwort.setMinTextSize(18);
+			tvAntwort.setMinTextSize(11);
 			tvAntwort.setTextSize(18);
 			tvAntwort.setText(antwort[1]);
 			
 			tvAntwort = (AutoResizeTextView)findViewById(R.id.tanswer3);
-			tvAntwort.setMinTextSize(18);
+			tvAntwort.setMinTextSize(11);
 			tvAntwort.setTextSize(18);
 			tvAntwort.setText(antwort[2]);
 			
 			tvAntwort = (AutoResizeTextView)findViewById(R.id.tanswer4);
-			tvAntwort.setMinTextSize(18);
+			tvAntwort.setMinTextSize(11);
 			tvAntwort.setTextSize(18);
 			tvAntwort.setText(antwort[3]);
 			
 			tvAntwort = (AutoResizeTextView)findViewById(R.id.tanswer5);
-			tvAntwort.setMinTextSize(18);
+			tvAntwort.setMinTextSize(11);
 			tvAntwort.setTextSize(18);
 			tvAntwort.setText(antwort[4]);
 			
@@ -320,9 +333,20 @@ public class GameActivity extends Activity implements OnClickListener, Runnable
 			zeit -= 1;
 		refresh();
 		handler.postDelayed(this,tick);
+		if (zeit == 0)
+		{
+			gameOver();
+		}
 	}
 	
 	
+	private void gameOver() 
+	{
+		Dialog dialog = new Dialog(this, android.R.style.Theme_Translucent_NoTitleBar_Fullscreen);
+		dialog.setContentView(R.layout.gameover);
+		dialog.show();
+	}
+
 	public String[] getQuestion()
 	{		
 		zufall = (int) (Frage.length * random.nextFloat());
@@ -485,5 +509,4 @@ public class GameActivity extends Activity implements OnClickListener, Runnable
 	{
 		countdown();
 	}
-	
 }

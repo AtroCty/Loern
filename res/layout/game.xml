@@ -21,31 +21,10 @@
         android:progressDrawable="@drawable/time_bar"
         android:visibility="invisible" />
 
-    <TextView
-        android:id="@+id/zeit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:text="Punkte"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textColor="#550000"
-        tools:ignore="HardcodedText" />
-
-    <TextView
-        android:id="@+id/punkte"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:text="Zeit"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textColor="#005500"
-        tools:ignore="HardcodedText" />
-
     <LinearLayout
         android:id="@+id/FrageLayout"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/zeit"
         android:background="@drawable/button"
         android:gravity="center"
         android:orientation="horizontal" >
@@ -53,12 +32,12 @@
         <de.atrocty.loern.AutoResizeTextView
             android:id="@+id/frage"
             android:layout_width="235dp"
-            android:layout_height="60dp"
-            android:gravity="center"
+            android:layout_height="80dp"
+            android:gravity="center|left"
             android:text="Frage"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textStyle="normal"
             android:textSize="25sp"
+            android:textStyle="normal"
             tools:ignore="HardcodedText" />
 
         <FrameLayout
@@ -88,8 +67,8 @@
             <Button
                 android:id="@+id/answer1"
                 style="@style/ButtonText"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
+                android:layout_width="47dp"
+                android:layout_height="47dp"
                 android:background="@drawable/wrong"
                 android:text="1"
                 android:textStyle="normal"
@@ -99,7 +78,7 @@
                 android:id="@+id/tanswer1"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:gravity="center"
+                android:gravity="center|left"
                 android:text="Antwort  1"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textSize="16sp"
@@ -121,8 +100,8 @@
             <Button
                 android:id="@+id/answer2"
                 style="@style/ButtonText"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
+                android:layout_width="47dp"
+                android:layout_height="47dp"
                 android:background="@drawable/wrong"
                 android:text="2"
                 android:textStyle="normal"
@@ -132,7 +111,7 @@
                 android:id="@+id/tanswer2"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:gravity="center"
+                android:gravity="center|left"
                 android:text="Antwort 2"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textSize="17sp"
@@ -154,8 +133,8 @@
             <Button
                 android:id="@+id/answer3"
                 style="@style/ButtonText"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
+                android:layout_width="47dp"
+                android:layout_height="47dp"
                 android:background="@drawable/wrong"
                 android:text="3"
                 android:textStyle="normal"
@@ -165,9 +144,10 @@
                 android:id="@+id/tanswer3"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:gravity="center"
+                android:gravity="center|left"
                 android:text="Antwort 3"
                 android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textSize="17sp"
                 tools:ignore="HardcodedText" />
 
         </LinearLayout>
@@ -186,8 +166,8 @@
             <Button
                 android:id="@+id/answer4"
                 style="@style/ButtonText"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
+                android:layout_width="47dp"
+                android:layout_height="47dp"
                 android:background="@drawable/wrong"
                 android:text="4"
                 android:textStyle="normal"
@@ -197,9 +177,10 @@
                 android:id="@+id/tanswer4"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:gravity="center"
+                android:gravity="center|left"
                 android:text="Antwort 4"
                 android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textSize="17sp"
                 tools:ignore="HardcodedText" />
 
         </LinearLayout>
@@ -218,8 +199,8 @@
             <Button
                 android:id="@+id/answer5"
                 style="@style/ButtonText"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
+                android:layout_width="47dp"
+                android:layout_height="47dp"
                 android:background="@drawable/wrong"
                 android:text="5"
                 android:textStyle="normal"
@@ -229,9 +210,10 @@
                 android:id="@+id/tanswer5"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:gravity="center"
+                android:gravity="center|left"
                 android:text="Antwort 5"
                 android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textSize="17sp"
                 tools:ignore="HardcodedText" />
 
         </LinearLayout>
