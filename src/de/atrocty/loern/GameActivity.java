@@ -13,6 +13,7 @@ package de.atrocty.loern;
 import java.util.Random;
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.AnimationDrawable;
@@ -32,113 +33,156 @@ public class GameActivity extends Activity implements OnClickListener, Runnable
 	//---------------------------------------------------------------------------
 	// 	Globale Variablen
 	//---------------------------------------------------------------------------
+		
+	// Spieleinstellungen
+	int setZeit = 60;
 	
+	// Programmintern
 	public long fileSize = 0;
-	public int mode = 0, punkte = 0, zufall = 0;
+	public int mode = 0, zufall = 0;
 	public static int ticks = 20;
-	public int zeit = 60 * ticks;
+	public int zeit = setZeit * ticks;
 	public int LoesungPosi = 0;
 	public static int tick = (1000/ticks);
 	public boolean nextRound = true;
 	private Handler handler = new Handler();
 	private Random random = new Random();
 	boolean answergiven = false;
+	public int currentID = 0;
+	public int currentDiff = 0;
 	
 	//---------------------------------------------------------------------------
 	// 	Dummy-Fragen (Später durch Datenbank ersetzt)
 	//---------------------------------------------------------------------------
-	String[] Frage = 
-		{
-			"Komplexe Automatisierungsgeräte tauschen Nachrichten in der Aktor-Sensor-Ebene häufig nach dem Master-Slave-Verfahren mit zyklischem Poling aus. Welches besondere Merkmal ist damit verbunden?",
-			"Frage 2",
-		};
-	
-	String[] Loesung = 
-		{
-			"Eine garantierte gleichbleibende Abfragezykluszeit.",
-			"Richtig"
-		};
-	
-	String[] Falsch1 = 
-		{
-			"Jedem Sensor ist ein eigener Master zugeordnet.",
-			"Falsch1"
-		};
-	
-	String[] Falsch2 = 
-		{
-			"Die Sensoren übernehmen die Masterfunktion und können somit sehr schnell Daten an das Automatisierungsgerät übertragen.",
-			"Falsch2"
-		};
-	String[] Falsch3 = 
-		{
-			"Es können nur Aktoren über den Bus mit Daten versorgt werden.",
-			"Falsch3"
-		};
-	String[] Falsch4 = 
-		{
-			"Zwischen Master und Slave existiert eine parallele Datenverbindung.",
-			"Falsch4"
-		};
-	
-	int[] Schwierigkeit = 
-		{
-			3,
-			3
-		};
-	
-	String[][] Question = 
+	String[][] Question = new String[][]
 	{
-		{"1","2","3","4"}, 	//ID
+		{"1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17"}, 	//ID
 		//Fragen
 		{
 			"Komplexe Automatisierungsgeräte tauschen Nachrichten in der Aktor-Sensor-Ebene häufig nach dem Master-Slave-Verfahren mit zyklischem Poling aus. Welches besondere Merkmal ist damit verbunden?",
-			"Frage2",
-			"Frage3",
-			"Frage4"
+			"In welcher Auswahlantwort ist die Variablendeklaration für die Variable Zähler zweckmäßig und auch richtig dargestellt?",
+			"Bei der Programmierung des Prozessrechners wird ein Compiler eingesetzt. Wozu dient dieser?",
+			"Welches besondere Merkmal besitzt ein Flashspeicher?",
+			"Ein ER-Modell enthält bestimmte Informationen. Welche Antwort trifft zu?",
+			"Welcher Port muss im Router geöffnet sein, um einen Zugriff auf den http-Dienst des Webserver-PCs zu ermöglichen?",
+			"Bei der Übertragung über den RS485-Bus wird jedem Datentelegramm ein Paritätsbit angefügt. Wozu dienst dieses?",
+			"In welcher Antwort sind ausschließlich Protokolle aufgeführt, die der Anwendungsschicht des OSI-Referenzmodells zugeordnet sind?",
+			"Welches Sicherheitsziel wird mit einem RAID-System verfolgt?",
+			"Was versteht man im Zusammenhang mit der Programmentwicklung unter einem Breakpoint?",
+			"Welchen Vorteil hat die Anbindung über RS485 gegenüber RS232?",
+			"Welchen Vorteil hat die Archivierung von Daten innerhalb einer Datenbank gegenüber der herkömmlichen Datenspeicherung?",
+			"Die Archivierungsdaten werden in einem Backup-Verfahren gesichert. Welchen Vorteil bietet eine Vollsicherung gegenüber einer Sicherungskopie?",
+			"Aus welchem Grund wird an der Schnittstelle zwischen einem LAN und einem WAN häufig ein Router eingesetzt?",
+			"Welche Subnetzmaske gehört zu der öffentlichen IP-Adresse 217.91.85.78/30?",
+			"Wessen IP-Adresse muss als Gateway in den IP-Konfigurationen des Web-Servers und des Archivierungs-PCs eingetragen werden?",
+			"Auf dem UMTS-Router wird der NAT-Dienst eingesetzt. Welcher Vorteil ist damit verbunden?",
+			"Die Architektur des UMTS-Netzwerks basiert auf sogenannten Funkzellen. Welche Aussage über Funkzellen ist zutreffend?"
 		},
 		// Loesung
 		{
 			"Eine garantierte gleichbleibende Abfragezykluszeit.",
-			"Richtig",
-			"Richtig",
-			"Richtig"
+			"int Zaehler;",
+			"Der Compiler übersetzt den Quellcode und die Headerdateien in den Objektcode",
+			"Er ist ein elektrisch umprogrammierbarer Festwertspeicher",
+			"Es zeigt Entitätsmengen, Beziehungen und Kardinalitäten",
+			"80",
+			"Es dient zur Erkennung von Übertragungsfehlern",
+			"HTTP, FTP, SMTP, POP3",
+			"Schutz der Verfügbarkeit der Daten durch Redundanz",
+			"Er kann mit einem Debugger an beliebigen Stellen in einem zu testenden Programm zur Fehlerananalyse gesetzt werden",
+			"Die Datenübertragung ist weniger störanfällig",
+			"Der Entwickler muss nur angeben, was er speichern möchte, nicht wie er es speichert",
+			"Bei der Vollsicherung werden die gesicherten Dateien auf dem Ursprungslaufwerk als gesichert makiert",
+			"Der Router übersetzt die externe IP-Adresse in Adressen aus dem internen Adressbereich",
+			"255.255.255.252",
+			"Die interne IP-Adresse des UMTS-Routers",
+			"Im LAN können private IP-Adressen verwendet werden",
+			"Innerhalb einer Funkzelle teilen sich alle Teilnehmer die Datentransferrate von maximal 2 Mbit/s"
 		},
 		//Falsch1
 		{
 			"Jedem Sensor ist ein eigener Master zugeordnet.",
-			"Falsch 1",
-			"Falsch 1",
-			"Falsch 1"
+			"Zaehler int;",
+			"Der Compiler übersetzt den Quellcode und die Headerdateien in ein ablauffähiges Programm",
+			"Er kann nur einmalig programmiert werden",
+			"Es zeigt Primärschlüssel und Fremdschlüssel",
+			"21",
+			"Es kennzeichnet bevorzugt zu behandelnde Datentelegramme",
+			"DNS, TCP, X25, FTP",
+			"Schutz der Vertraulichkeit der Daten durch Verschlüsselung",
+			"Er bezeichnet eine fehlerhafte Stelle im Programm, an der dieses abstürzt",
+			"Sie ist weniger aufwendig (Kosten. Bauteile...)",
+			"Die Suche nach Werten ist bei einer Dateilösung unmöglich",
+			"Bei der Vollsicherung werden nur veränderte oder neu erstellte Dateien gesichert",
+			"Der Router ist in erster Linie für die Zwischenspeicherung von Internetseiten vorhanden",
+			"255.255.0.0",
+			"Die externe IP-Adresse der Luftschnittstelle vom UMTS-Router",
+			"Im LAN können öffentliche IP-Adressen verwendet werden",
+			"Der Radius einer Funkzelle darf 100m nicht übersteigen"
 		},
 		//Falsch2
 		{
 			"Die Sensoren übernehmen die Masterfunktion und können somit sehr schnell Daten an das Automatisierungsgerät übertragen.",
-			"Falsch 2",
-			"Falsch 2",
-			"Falsch 2"
+			"Zaehler float;",
+			"Der Compiler übersetzt nur den Quellcode in den Objektcode",
+			"Er ist nach jedem Einschalten vollständig gelöscht ",
+			"Es zeigt Primärschlüssel, Beziehungen und Kardinalitäten",
+			"23",
+			"Es kennzeichnet nachrangige Datentelegramme",
+			"HTTP, UDP, IP, SMTP",
+			"Schutz der Integrität der Daten durch digitale Signatur",
+			"Er makiert eine Abbruchbedingung in einer Wiederholschleife",
+			"Im Voll-Duplex-Betrieb benötigt sie weniger Leitungen",
+			"Die speicherbaren Datenmengen sind größer",
+			"Bei der Vollsicherung werden nur die am jeweiligen Tag geänderten Dateien gesichert",
+			"Der Router dient als Parallel/Seriell-Umsetzter",
+			"255.255.255.0",
+			"Die Netzwerk-Adresse des LANs",
+			"Dadurch wird der Zugriff vom Fernwartungs-PC auf den Web-Server ermöglicht",
+			"Wenn ein Teilnehmer die Funkzelle verlässt, wird die UMTS-Verbindung unterbrochen"
 		},
 		//Falsch3
 		{
 			"Es können nur Aktoren über den Bus mit Daten versorgt werden.",
-			"Falsch 3",
-			"Falsch 3",
-			"Falsch 3",
+			"float Zaehler;",
+			"Der Compiler übersetzt nur den Objektcode in den Quellcode",
+			"Er ist ein nicht flüchtiger Nur-Lese-Speicher",
+			"Es zeigt Fremdschlüssel und Primärschlüsselbeziehungen",
+			"53",
+			"Es kennzeichnet das Ende eines Telegrammes",
+			"FTP, HTTP, X32, Ethernet",
+			"Schutz vor Manipulation der Daten durch Zugangskontrolle",
+			"Er unterbricht ein Hauptprogramm wenn z.B. ein Not-Aus betätigt wird",
+			"RS485 arbeitet mit einem massesymmetrischen Signal",
+			"Der Entwickler muss nur angeben, wie er etwas speichern möchte, nicht was er speichert",
+			"Bei der Vollsicherung werden grundsätzlich alle Systemdateien mitgesichert",
+			"Der Router stellt eine Wählverbindung zum Provider her",
+			"255.255.255.240",
+			"Die Broadcast-Adresse des LANs",
+			"Nur der Fernwartungs-PC kann auf den Web-Server zugreifen",
+			"Je größer die Ausdehnung einer Funkzelle ist, desto größer ist die theoretisch nutzbare Datentransferrate"
 		},
 		//Falsch4
 		{
 			"Zwischen Master und Slave existiert eine parallele Datenverbindung.",
-			"Falsch 4",
-			"Falsch 4",
-			"Falsch 4",
+			"double Zaehler;",
+			"Der Compiler übersetzt nur die Headerdateien",
+			"Er gestattet ausschließlich den sequenziellen Datenzugriff",
+			"Es zeigt Entitäten, Beziehungen und Attribute",
+			"110",
+			"Es dient der Unterscheidung von Frage- und Antworttelegrammen",
+			"DNS, FTP, SMTP, IP",
+			"Schutz vor Datenverlust durch Backup-Medium",
+			"Er kann bei der Programmierung nicht verwendet werden",
+			"Im Gegensatz zu RS232 können hiermit auch Binärdaten übertragen werden",
+			"Nur mit der Datenbankspeicherung sind Backupsicherungen möglich",
+			"Die Vollsicherung ist mit der Sicherungskopie",
+			"Ein Router wird an dieser Stelle niemals eingesetzt",
+			"255.255.255.255",
+			"Es muss keine Adresse konfiguriert werden, wenn der Zugang über einen UMTS-Router erfolgt",
+			"Unerwünschte Absender können blockiert werden (Blacklist)",
+			"Mit Funkzelle wird der Raum beim Sender bezeichent, in dem sich die Sendeantenne befindet"
 		},
-		//Schwierigkeit
-		{
-			"3",
-			"3",
-			"3",
-			"3"
-		}
 	};
 	//---------------------------------------------------------------------------
 	// 	Initialiserungen beim ersten Aufruf
@@ -204,6 +248,29 @@ public class GameActivity extends Activity implements OnClickListener, Runnable
 	}
 	
 	//---------------------------------------------------------------------------
+	//  Setzen der Schwierigkeit in den Android Storage, damit diese
+	//  beim nächsten Aufruf der App erhalten bleiben
+	//---------------------------------------------------------------------------
+	
+	private void setDiff(int diff) 
+	{
+		SharedPreferences pref = getSharedPreferences("GAME", 0);
+		SharedPreferences.Editor editor = pref.edit();
+		editor.putInt(String.valueOf(currentID), diff);
+		editor.commit();
+	}
+	//---------------------------------------------------------------------------
+	// 	Einlesen der aktuellen Schwierigkeit
+	//---------------------------------------------------------------------------
+	
+	private int getDiff() 
+	{
+		SharedPreferences pref = getSharedPreferences("GAME", 0);
+		// Wenn vorhanden gebe Wert weiter, ansonsten  standartmäßig 3
+		return pref.getInt(String.valueOf(currentID), 3);
+	}
+	
+	//---------------------------------------------------------------------------
 	// 	Optionsmenue (Benoetigen wir in dieser Activity nicht)
 	//---------------------------------------------------------------------------
 	
@@ -221,6 +288,12 @@ public class GameActivity extends Activity implements OnClickListener, Runnable
 	public void refresh()
 	{
 		RelativeLayout fl = (RelativeLayout)findViewById(R.id.Mainmenu);
+		
+		//---------------------------------------------------------------------------
+		// 	Wenn Antwort gegeben, dann entferne Listener auf den Buttons, und
+		// 	mache den ganzen Bildschirm als Listener. Ansonsten umgekehrt.
+		//---------------------------------------------------------------------------
+		
 		if (answergiven == true)
 		{	
 			fl.setFocusable(true);
@@ -267,21 +340,25 @@ public class GameActivity extends Activity implements OnClickListener, Runnable
 			
 		}
 		
-		if (mode == 3)
+		// Aktualisierung der Zeitleiste, wenn nicht Prüfungsmodus aktiv
+		if (mode != 2)
 		{					
 			ProgressBar progressbar1 = (ProgressBar)findViewById(R.id.progressBar1);
 			progressbar1.setVisibility(View.VISIBLE);
-			progressbar1.setMax(60*ticks);
+			progressbar1.setMax(setZeit*ticks);
 			progressbar1.setProgress(zeit);
 		}	
 		
+		// Anweisungen, wenn nächste Frage gestellt werden soll
 		if (nextRound == true)
 		{
 			nextRound = false;
 			String[] task = getQuestion();
 			String Frage = task[0];
 			String[] antwort = { task[1], task[2], task[3], task[4], task[5] };
+			currentID = Integer.parseInt(task[6]);
 			shuffleArray(antwort);
+			currentDiff = getDiff();
 			
 			AutoResizeTextView tvFrage = (AutoResizeTextView)findViewById(R.id.frage);
 			tvFrage.setMinTextSize(12);
@@ -314,26 +391,26 @@ public class GameActivity extends Activity implements OnClickListener, Runnable
 			tvAntwort.setText(antwort[4]);
 			
 			FrameLayout LED = (FrameLayout)findViewById(R.id.difficulty);
-			if (Schwierigkeit[zufall] == 1)
+			if (currentDiff == 1)
 				LED.getBackground().setColorFilter(Color.parseColor("#ff2222"), PorterDuff.Mode.DARKEN);
-			if (Schwierigkeit[zufall] == 2)
+			if (currentDiff == 2)
 				LED.getBackground().setColorFilter(Color.parseColor("#ff9934"), PorterDuff.Mode.DARKEN);
-			if (Schwierigkeit[zufall] == 3)
+			if (currentDiff == 3)
 				LED.getBackground().setColorFilter(Color.parseColor("#ffff00"), PorterDuff.Mode.DARKEN);
-			if (Schwierigkeit[zufall] == 4)
+			if (currentDiff == 4)
 				LED.getBackground().setColorFilter(Color.parseColor("#99ff34"), PorterDuff.Mode.DARKEN);
-			if (Schwierigkeit[zufall] == 5)
+			if (currentDiff == 5)
 				LED.getBackground().setColorFilter(Color.parseColor("#00cc00"), PorterDuff.Mode.DARKEN);		
 		}
 	}
 	
 	public void countdown()
 	{
-		if (answergiven==false)
+		if ((answergiven==false) && (zeit >= 0) && (mode == 3))
 			zeit -= 1;
 		refresh();
 		handler.postDelayed(this,tick);
-		if (zeit == 0)
+		if ((zeit == 0) && (mode != 1))
 		{
 			gameOver();
 		}
@@ -342,15 +419,54 @@ public class GameActivity extends Activity implements OnClickListener, Runnable
 	
 	private void gameOver() 
 	{
-		Dialog dialog = new Dialog(this, android.R.style.Theme_Translucent_NoTitleBar_Fullscreen);
+		final Dialog dialog = new Dialog(this, android.R.style.Theme_Translucent);
 		dialog.setContentView(R.layout.gameover);
-		dialog.show();
+		Button finish = (Button) dialog.findViewById(R.id.finish);
+		finish.setOnClickListener(new OnClickListener() 
+		{
+			@Override
+			public void onClick(View v) 
+			{
+				dialog.dismiss();
+				finish();
+			}
+		});		
+		if (dialog.isShowing()== false)
+			dialog.show();
 	}
 
 	public String[] getQuestion()
 	{		
-		zufall = (int) (Frage.length * random.nextFloat());
-		return new String[] { Frage[zufall], Loesung[zufall], Falsch1[zufall], Falsch2[zufall], Falsch3[zufall], Falsch4[zufall]};	
+		int[] cnt = {0,0,0,0,0}; 
+		for (currentID = 0; currentID < Question[0].length; currentID++) 
+		{
+			cnt[(getDiff()-1)]++;
+		}
+		int decide = 6;
+		while (decide >= 6)
+		{
+			// Anzahl der Fragen mit Multiplikator. Existiert der Wert nicht, dann re-roll.
+			decide = (int) ((cnt[0]*10+cnt[1]*8+cnt[2]*6+cnt[3]*4+cnt[4]*2) * random.nextFloat() + 6);
+			if ((decide>=6) && (decide<=(cnt[0]*10+5)) && (cnt[0] != 0))
+				decide = 1;
+			else if ((decide>=(cnt[0]*10+6)) && (decide<=cnt[0]*10+cnt[1]*8+5) && (cnt[1] != 0))
+				decide = 2;
+			else if ((decide>=(cnt[0]*10+cnt[1]*8+6)) && (decide<=cnt[0]*10+cnt[1]*8+cnt[2]*6+5) && (cnt[2] != 0))
+				decide = 3;
+			else if ((decide>=(cnt[0]*10+cnt[1]*8+cnt[2]*6+6)) && (decide<=cnt[0]*10+cnt[1]*8+cnt[2]*6+cnt[3]*4+5) && (cnt[3] != 0))
+				decide = 4;
+			else if ((decide>=(cnt[0]*10+cnt[1]*8+cnt[2]*6+cnt[3]*4+6)) && (decide<=cnt[0]*10+cnt[1]*8+cnt[2]*6+cnt[3]*4+cnt[4]*2+5) && (cnt[4] != 0))
+				decide = 5;
+		}
+		int match = 0;
+		do
+		{
+			zufall = (int) (Question[0].length * random.nextFloat());
+			currentID = zufall+1;
+			match = getDiff();
+		}
+		while (decide != match);
+		return new String[] { Question[1][zufall],Question[2][zufall],Question[3][zufall],Question[4][zufall],Question[5][zufall],Question[6][zufall],Question[0][zufall]};	
 	}
 	
 	@Override
@@ -367,8 +483,11 @@ public class GameActivity extends Activity implements OnClickListener, Runnable
 			}
 			else
 			{
-				if (Schwierigkeit[zufall]>1)
-					Schwierigkeit[zufall]--;
+				if (currentDiff>1)
+				{
+					currentDiff--;
+					setDiff(currentDiff);
+				}
 			}
 			answergiven = true;
 			ans = (Button) findViewById(R.id.answer1);
@@ -382,8 +501,11 @@ public class GameActivity extends Activity implements OnClickListener, Runnable
 			}
 			else
 			{
-				if (Schwierigkeit[zufall]>1)
-					Schwierigkeit[zufall]--;
+				if (currentDiff>1)
+				{
+					currentDiff--;
+					setDiff(currentDiff);
+				}
 			}
 			answergiven = true;
 			ans = (Button) findViewById(R.id.answer2);
@@ -397,8 +519,11 @@ public class GameActivity extends Activity implements OnClickListener, Runnable
 			}
 			else
 			{
-				if (Schwierigkeit[zufall]>1)
-					Schwierigkeit[zufall]--;
+				if (currentDiff>1)
+				{
+					currentDiff--;
+					setDiff(currentDiff);
+				}
 			}
 			answergiven = true;
 			ans = (Button) findViewById(R.id.answer3);
@@ -412,8 +537,11 @@ public class GameActivity extends Activity implements OnClickListener, Runnable
 			}
 			else
 			{
-				if (Schwierigkeit[zufall]>1)
-					Schwierigkeit[zufall]--;
+				if (currentDiff>1)
+				{
+					currentDiff--;
+					setDiff(currentDiff);
+				}
 			}
 			answergiven = true;
 			ans = (Button) findViewById(R.id.answer4);
@@ -427,11 +555,19 @@ public class GameActivity extends Activity implements OnClickListener, Runnable
 			}
 			else
 			{
-				if (Schwierigkeit[zufall]>1)
-					Schwierigkeit[zufall]--;
+				if (currentDiff>1)
+				{
+					currentDiff--;
+					setDiff(currentDiff);
+				}
 			}
 			answergiven = true;
 			ans = (Button) findViewById(R.id.answer5);
+		}
+		
+		if(v.getId() == R.id.finish) 
+		{
+			finish();
 		}
 		
 		AnimationDrawable frameAnimation = null;
@@ -475,12 +611,24 @@ public class GameActivity extends Activity implements OnClickListener, Runnable
 		
 	}
 	
+	
+	//---------------------------------------------------------------------------
+	// 	Anweisungen bei einer richtigen Antwort
+	//---------------------------------------------------------------------------
+	
 	public void rightAnswer()
 	{
-		punkte += 5;
-		if (Schwierigkeit[zufall] < 5)
-			Schwierigkeit[zufall]++;
+		if (currentDiff < 5)
+		{
+			currentDiff++;
+			setDiff(currentDiff);
+		}
+		
 	}
+	
+	//---------------------------------------------------------------------------
+	// 	Mischen eines Arrays
+	//---------------------------------------------------------------------------
 	
 	public void shuffleArray(String[] ar)
 	{
