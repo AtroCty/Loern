@@ -56,7 +56,7 @@ public class GameActivity extends Activity implements OnClickListener, Runnable
 	//---------------------------------------------------------------------------
 	String[][] Question = new String[][]
 	{
-		{"1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17"}, 	//ID
+		{"1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23"}, 	//ID
 		//Fragen
 		{
 			"Komplexe Automatisierungsgeräte tauschen Nachrichten in der Aktor-Sensor-Ebene häufig nach dem Master-Slave-Verfahren mit zyklischem Poling aus. Welches besondere Merkmal ist damit verbunden?",
@@ -76,7 +76,13 @@ public class GameActivity extends Activity implements OnClickListener, Runnable
 			"Welche Subnetzmaske gehört zu der öffentlichen IP-Adresse 217.91.85.78/30?",
 			"Wessen IP-Adresse muss als Gateway in den IP-Konfigurationen des Web-Servers und des Archivierungs-PCs eingetragen werden?",
 			"Auf dem UMTS-Router wird der NAT-Dienst eingesetzt. Welcher Vorteil ist damit verbunden?",
-			"Die Architektur des UMTS-Netzwerks basiert auf sogenannten Funkzellen. Welche Aussage über Funkzellen ist zutreffend?"
+			"Die Architektur des UMTS-Netzwerks basiert auf sogenannten Funkzellen. Welche Aussage über Funkzellen ist zutreffend?",
+			"Was ist zutreffend bei einem Feldbussystem?",
+			"Welchen Vorteil bietet eine Stromschnittstelle gegenüber einer Spannungsschnittstelle?",
+			"Was ist bei einem Interbus zutreffend?",
+			"Welche Aussage ist zum I²C zutreffend?",
+			"Welche Bestandteile muss ein Software-Protokoll mindestens haben, um geregelten Datenaustausch mit variable Nutzungslänge zu ermöglichen?",
+			"Welchen Vorteil bietet der NAT-Dienst (Network Address Translation)?"
 		},
 		// Loesung
 		{
@@ -89,15 +95,21 @@ public class GameActivity extends Activity implements OnClickListener, Runnable
 			"Es dient zur Erkennung von Übertragungsfehlern",
 			"HTTP, FTP, SMTP, POP3",
 			"Schutz der Verfügbarkeit der Daten durch Redundanz",
-			"Er kann mit einem Debugger an beliebigen Stellen in einem zu testenden Programm zur Fehlerananalyse gesetzt werden",
+			"Er kann mit einem Debugger an beliebigen Stellen in einem zu testenden Programm zur Fehleranalyse gesetzt werden",
 			"Die Datenübertragung ist weniger störanfällig",
 			"Der Entwickler muss nur angeben, was er speichern möchte, nicht wie er es speichert",
-			"Bei der Vollsicherung werden die gesicherten Dateien auf dem Ursprungslaufwerk als gesichert makiert",
+			"Bei der Vollsicherung werden die gesicherten Dateien auf dem Ursprungslaufwerk als gesichert markiert",
 			"Der Router übersetzt die externe IP-Adresse in Adressen aus dem internen Adressbereich",
 			"255.255.255.252",
 			"Die interne IP-Adresse des UMTS-Routers",
 			"Im LAN können private IP-Adressen verwendet werden",
-			"Innerhalb einer Funkzelle teilen sich alle Teilnehmer die Datentransferrate von maximal 2 Mbit/s"
+			"Innerhalb einer Funkzelle teilen sich alle Teilnehmer die Datentransferrate von maximal 2 Mbit/s",
+			"Verbindung von Baugruppen der Steuerungs- und Regelungstechnik, Bedien- und Anzeigegeräte, Mess- und Überwachungsgeräte",
+			"Die Stromschleife besitzt eine höhere Störsicherheit, es sind größere Übertragungsstrecken (>500 m) möglich",
+			"Es ist ein serielles Bussystem, das als Fernbus eine Gesamtausdehnung mit Repeatern bis zu ca. 13 km aufweisen kann",
+			"Der I²C ist ein serielles Bussystem, das normalerweise innerhalb eines Geräts zur Anwendung kommt",
+			"Zieladresse, Länge des Datenrahmens (Frames), Daten",
+			"Im LAN können private IP-Adressen verwendet werden"
 		},
 		//Falsch1
 		{
@@ -118,7 +130,13 @@ public class GameActivity extends Activity implements OnClickListener, Runnable
 			"255.255.0.0",
 			"Die externe IP-Adresse der Luftschnittstelle vom UMTS-Router",
 			"Im LAN können öffentliche IP-Adressen verwendet werden",
-			"Der Radius einer Funkzelle darf 100m nicht übersteigen"
+			"Der Radius einer Funkzelle darf 100m nicht übersteigen",
+			"Komplexität behindert Automatisierung von technischen Einrichtungen",
+			"Die Stromschleife besitzt eine höhere Störsicherheit, es sind Übertragungsstrecken bis 100 m möglich",
+			"Es ist ein serielles Bussystem, das normalerweise innerhalb eines Gerätes zur Anwendung kommt",
+			"Der I²C ist ein serielles Bussystem, das als Feldbussystem auch entfernte Sensoren an das System anbinden kann",
+			"Quelladresse, Zieladresse, Daten, Prüfsumme",
+			"Im LAN können öffentliche IP-Adressen verwendet werden"
 		},
 		//Falsch2
 		{
@@ -131,15 +149,21 @@ public class GameActivity extends Activity implements OnClickListener, Runnable
 			"Es kennzeichnet nachrangige Datentelegramme",
 			"HTTP, UDP, IP, SMTP",
 			"Schutz der Integrität der Daten durch digitale Signatur",
-			"Er makiert eine Abbruchbedingung in einer Wiederholschleife",
+			"Er markiert eine Abbruchbedingung in einer Wiederholschleife",
 			"Im Voll-Duplex-Betrieb benötigt sie weniger Leitungen",
 			"Die speicherbaren Datenmengen sind größer",
 			"Bei der Vollsicherung werden nur die am jeweiligen Tag geänderten Dateien gesichert",
-			"Der Router dient als Parallel/Seriell-Umsetzter",
+			"Der Router dient als Parallel/Seriell-Umsetzer",
 			"255.255.255.0",
 			"Die Netzwerk-Adresse des LANs",
 			"Dadurch wird der Zugriff vom Fernwartungs-PC auf den Web-Server ermöglicht",
-			"Wenn ein Teilnehmer die Funkzelle verlässt, wird die UMTS-Verbindung unterbrochen"
+			"Wenn ein Teilnehmer die Funkzelle verlässt, wird die UMTS-Verbindung unterbrochen",
+			"Herstellerunabhängiger Elementaustausch ist durch eigene Übertragungsprotokolle unmöglich",
+			"Die Stromschleife besitzt eine niedrigere Störsicherheit, es sind Übertragungsstrecken bis 100 m möglich",
+			"Es ist ein serielles Bussystem, von dem über sogenannte Buskoppler Lokalbusse mit jeweils 50 m Länge abzweigen können",
+			"Der I²C ist ein serielles Bussystem, das für eine schnelle Kommunikation zwischen Industrierechner und Sensoren entwickelt wurde",
+			"Quelladresse, Zieladresse, Länge des Datenrahmens (Frames), Daten",
+			"Dadurch wird der Zugriff vom Fernwartungs-PC auf den Web-Server ermöglicht"
 		},
 		//Falsch3
 		{
@@ -155,12 +179,18 @@ public class GameActivity extends Activity implements OnClickListener, Runnable
 			"Er unterbricht ein Hauptprogramm wenn z.B. ein Not-Aus betätigt wird",
 			"RS485 arbeitet mit einem massesymmetrischen Signal",
 			"Der Entwickler muss nur angeben, wie er etwas speichern möchte, nicht was er speichert",
-			"Bei der Vollsicherung werden grundsätzlich alle Systemdateien mitgesichert",
+			"Bei der Vollsicherung werden grundsätzlich alle Systemdateien mit gesichert",
 			"Der Router stellt eine Wählverbindung zum Provider her",
 			"255.255.255.240",
 			"Die Broadcast-Adresse des LANs",
 			"Nur der Fernwartungs-PC kann auf den Web-Server zugreifen",
-			"Je größer die Ausdehnung einer Funkzelle ist, desto größer ist die theoretisch nutzbare Datentransferrate"
+			"Je größer die Ausdehnung einer Funkzelle ist, desto größer ist die theoretisch nutzbare Datentransferrate",
+			"Verbindung der industriellen Kommunikation: Einzelleitebene, Blockleitebene, Fabrikebene",
+			"Die Stromschleife besitzt eine niedrigere Störsicherheit, es sind größere Übertragungsstrecken (>500 m) möglich",
+			"Der Interbus-Master reagiert auf Interruptanforderung durch die Slaves mit einem Sende-Aufforderungsprotokoll",
+			"Der I²C ist ein paralleles Bussystem, das normalerweise innerhalb eines Geräts zur Anwendung kommt",
+			"Zieladresse, Länge des Datenrahmens (Frames), Daten, Prüfsumme",
+			"Nur der Fernwartungs-PC kann auf den Web-Server zugreifen"
 		},
 		//Falsch4
 		{
@@ -181,7 +211,13 @@ public class GameActivity extends Activity implements OnClickListener, Runnable
 			"255.255.255.255",
 			"Es muss keine Adresse konfiguriert werden, wenn der Zugang über einen UMTS-Router erfolgt",
 			"Unerwünschte Absender können blockiert werden (Blacklist)",
-			"Mit Funkzelle wird der Raum beim Sender bezeichent, in dem sich die Sendeantenne befindet"
+			"Mit Funkzelle wird der Raum beim Sender bezeichnet, in dem sich die Sendeantenne befindet",
+			"Für schnelle Reaktion der Busteilnehmer haben alle uneingeschränkten Zugriff auf den Feldbus",
+			"Die Stromschleife hat eine niedrigere Störsicherheit, deshalb sind kurze Übertragungsstrecken möglich, aber kleinerer Leiterquerschnitt",
+			"Der Interbus ist ein paralleles Bussystem, das als Feldbussystem auch entfernte Sensoren an das System anbinden kann",
+			"Der I²C ist ein paralleles Bussystem, das als Feldbussystem auch entfernte Sensoren an das System anbinden kann",
+			"Zieladresse, Daten, Prüfsumme",
+			"Unerwünschte Absender können blockiert werden (Blacklist)"
 		},
 	};
 	//---------------------------------------------------------------------------
@@ -447,7 +483,7 @@ public class GameActivity extends Activity implements OnClickListener, Runnable
 		{
 			// Anzahl der Fragen mit Multiplikator. Existiert der Wert nicht, dann re-roll.
 			decide = (int) ((cnt[0]*10+cnt[1]*8+cnt[2]*6+cnt[3]*4+cnt[4]*2) * random.nextFloat() + 6);
-			if ((decide>=6) && (decide<=(cnt[0]*10+5)) && (cnt[0] != 0))
+			if (((decide>=6) && (decide<=(cnt[0]*10+5)) && (cnt[0] != 0)) || ((cnt[1] == 0) && (cnt[2] == 0) && (cnt[3] == 0) && (cnt[4] == 0) ))
 				decide = 1;
 			else if ((decide>=(cnt[0]*10+6)) && (decide<=cnt[0]*10+cnt[1]*8+5) && (cnt[1] != 0))
 				decide = 2;
